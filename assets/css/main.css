@@ -1,0 +1,48 @@
+.body {
+}
+
+.matrix-container {
+  display: block;
+}
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 0;
+}
+
+.mainline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: transparent;
+  color: white; /* If you want the text color to be white */
+  font-size: 2em; /* Adjust the size as needed */
+  z-index: 1; /* Higher than the z-index of #matrix-canvas */
+  position: relative; /* Required for z-index to work */
+  animation: fadeIn 4.32s ease-in-out; /* Apply the fadeIn animation */
+}
+
+.evanesoteric {}
+.evanesoteric h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(2rem, 10vw, 3.8rem);
+  color: white;
+  padding: 0rem clamp(1rem, 2vw, 3rem);
+  border-radius: clamp(0.4rem, 0.75vw, 1rem);
+}
+.evanesoteric h1:hover {
+  background-color: white;
+  color: black;
+}
+
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
