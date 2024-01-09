@@ -14,6 +14,7 @@
 	<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 	
 	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/uikit.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 </head>
@@ -28,6 +29,38 @@
 	<div class="mainline evanesoteric">
       <h1 data-value="evanesoteric">evanesoteric</h1>
 	</div>
+
+	<!-- GPG key -->
+	<ul class="infobar">
+
+		<!-- github -->
+		<a target="_blank" href="https://github.com/evanesoteric" uk-tooltip="title: github; pos: bottom;">
+		    <li class="infobar-item">
+		        <div class="">
+    			    <img src="assets/img/github.svg" alt="github">
+			    </div>
+		    </li>
+		</a>
+
+        <!-- email -->
+        <a href="mailto:ev@evanesoteric.com" uk-tooltip="title: email; pos: bottom;">
+		    <li class="infobar-item">
+		        <div class="">
+    			    <img src="assets/img/email.svg" alt="email">
+			    </div>
+		    </li>
+		</a>
+
+		<!-- gpg -->
+		<a href="gpg.txt" uk-tooltip="title: GPG; pos: bottom;">
+    		<li class="infobar-item">
+	    	    <div class="">
+    	    		<img src="assets/img/lock.svg" alt="GPG">
+		    	</div>
+		    </li>
+   	    </a>
+   	    
+	</ul>
 
 	<!-- scripts -->
 	<script src="assets/js/uikit.min.js"></script>
