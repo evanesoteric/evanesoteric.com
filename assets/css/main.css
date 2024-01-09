@@ -1,4 +1,4 @@
-.body {
+a.body {
 }
 
 .matrix-container {
@@ -18,31 +18,51 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
   background-color: transparent;
-  color: white; /* If you want the text color to be white */
-  font-size: 2em; /* Adjust the size as needed */
-  z-index: 1; /* Higher than the z-index of #matrix-canvas */
-  position: relative; /* Required for z-index to work */
-  animation: fadeIn 4.32s ease-in-out; /* Apply the fadeIn animation */
+  color: #ffffff;
+  font-size: 2em;
+  z-index: 1;
+  position: relative;
+  animation: fadeIn 4.32s ease-in-out;
 }
 
 .evanesoteric {}
 .evanesoteric h1 {
   font-family: 'Space Mono', monospace;
   font-size: clamp(2rem, 10vw, 3.8rem);
-  color: white;
+  color: #ffffff;
   padding: 0rem clamp(1rem, 2vw, 3rem);
   border-radius: clamp(0.4rem, 0.75vw, 1rem);
 }
 .evanesoteric h1:hover {
   background-color: white;
-  color: black;
+  color: #000000;
 }
 
+.infobar {
+  display: inline-block;
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  animation: fadeIn 4.32s ease-in-out;
+}
+.infobar .infobar-item {
+  display: inline-block;
+  margin: auto 5px;
+  padding: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+.infobar .infobar-item img {
+  display: block;
+  height: 32px;
+  max-width: 32px;
+}
 
 /* Animation */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
