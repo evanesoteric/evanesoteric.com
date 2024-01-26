@@ -24,7 +24,9 @@ a.body {
   font-size: 2em;
   z-index: 1;
   position: relative;
-  animation: fadeIn 4.32s ease-in-out;
+  animation: delay 4s, fadeIn 9s ease-in-out;
+  animation-fill-mode: forwards;
+  /* animation: fadeIn 4.32s ease-in-out; */
 }
 
 .evanesoteric {}
@@ -62,6 +64,10 @@ a.body {
 }
 
 /* Animation */
+@keyframes delay {
+ from { opacity: 0; }
+ to { opacity: 0; }
+}
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
