@@ -73,7 +73,7 @@ module.exports = {
       title: 'evanesoteric',
       filename: 'index.html',
       template: 'src/index.html',
-      favicon: 'src/assets/img/favicon.png',
+      favicon: 'src/assets/img/favicon.webp',
       inject: true,
     }),
     new MiniCssExtractPlugin({
@@ -82,7 +82,9 @@ module.exports = {
     new CopyPlugin({
         patterns: [
           { from: 'src/robots.txt', to: 'robots.txt' },
-          { from: 'src/gpg.txt', to: 'gpg.txt' }
+          { from: 'src/gpg.txt', to: 'gpg.txt' },
+          { from: 'src/assets/img/favicon.webp', to: 'assets/img/favicon.webp' },
+          { from: 'src/assets/img/opengraph.webp', to: 'assets/img/opengraph.webp' },
         ],
       }),
     new BundleAnalyzerPlugin(),
