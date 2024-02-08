@@ -15,18 +15,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="evanesoteric.com">
     <meta name="twitter:image" content="https://evanesoteric.com/assets/img/logo-opengraph.webp">
-    <meta property="og:image" content="https://evanesoteric.com/assets/img/favicon.svg" />>
+    <meta property="og:image" content="https://evanesoteric.com/assets/img/favicon.png" />
 
     <!-- favicon -->
-    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/favicon.png" type="image/png">
 
     <!-- dynamic localization -->
     <meta property="og:locale" content="en_US">
-	
-	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/uikit.min.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+	<!-- css (uncomment for development until coditional dev/prod login setup) -->
+    <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/uikit.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/main.scss"> -->
 </head>
 <body>
 
@@ -40,13 +40,13 @@
       <h1 data-value="evanesoteric">evanesoteric</h1>
 	</div>
 
-	<!-- GPG key -->
+	<!-- infobar -->
 	<ul class="infobar">
 
 		<!-- github -->
 		<a target="_blank" href="https://github.com/evanesoteric" uk-tooltip="title: Github; pos: bottom;">
 		    <li class="infobar-item">
-		        <div class="">
+				<div class="">
     			    <img src="assets/img/github.svg" alt="Github">
 			    </div>
 		    </li>
@@ -55,7 +55,7 @@
         <!-- email -->
         <a href="mailto:ev@evanesoteric.com" uk-tooltip="title: Email; pos: bottom;">
 		    <li class="infobar-item">
-		        <div class="">
+				<div class="">
     			    <img src="assets/img/email.svg" alt="Email">
 			    </div>
 		    </li>
@@ -64,7 +64,7 @@
 		<!-- gpg -->
 		<a href="gpg.txt" uk-tooltip="title: GPG; pos: bottom;">
     		<li class="infobar-item">
-	    	    <div class="">
+	    	   <div class="">
     	    		<img src="assets/img/lock.svg" alt="GPG">
 		    	</div>
 		    </li>
@@ -73,7 +73,7 @@
 	</ul>
 
 	<!-- scripts -->
-	<script src="assets/js/uikit.min.js"></script>
+	<script src="assets/js/uikit.js"></script>
 	<script src="assets/js/main.js"></script>
 
 	<!-- Analytics -->
