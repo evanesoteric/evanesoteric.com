@@ -1,6 +1,6 @@
 # evanesoteric.com
 
-Welcome to evanesoteri'c digital matrix.
+Welcome to evanesoteric's digital matrix.
 
 **[evanesoteric.com](https://evanesoteric.com)**
 
