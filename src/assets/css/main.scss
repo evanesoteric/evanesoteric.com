@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'EOB';
+  src: url('../fonts/earthorbiterbold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .matrix-container {
   display: block;
 }
@@ -32,25 +39,29 @@
   animation-fill-mode: forwards;
 }
 
-.mainline h1 {
-  font-size: 2em; /* Standard font-size */
-  font-weight: normal; /* Resetting font weight if needed */
-}
-
-.evanesoteric {
-  text-align: center; /* Centering the text */
-}
-
-.evanesoteric h1 {
-  font-size: clamp(2rem, 10vw, 3.8rem);
+.mainline > h1 {
+  font-family: 'EOB', 'Open Sans', sans-serif;
+  font-size: 2em;
   color: #ffffff;
-  padding: 0rem clamp(1rem, 2vw, 3rem);
-  border-radius: clamp(0.4rem, 0.75vw, 1rem);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.evanesoteric h1:hover {
-  background-color: white;
-  color: #000000;
+.avatar {
+  display: inline-block;
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  animation: fadeIn 4.32s ease-in-out;
+}
+.avatar img {
+  display: block;
+  margin: auto 5px;
+  padding: 10px;
+  height: 240px;
+  max-width: 240px;
+  border-radius: 50%;
 }
 
 .infobar {
@@ -61,7 +72,6 @@
   right: 20px;
   animation: fadeIn 4.32s ease-in-out;
 }
-
 .infobar .infobar-item {
   display: inline-block;
   margin: auto 5px;
@@ -73,11 +83,15 @@
 .infobar .infobar-item:hover {
   background-color: rgba(65, 105, 225, 0.7);
 }
-
 .infobar .infobar-item img {
   display: block;
   height: 32px;
   max-width: 32px;
+}
+
+.blinking-cursor {
+  user-select: none;
+  animation: blink 1s steps(2, start) infinite;
 }
 
 /* Animation */
@@ -98,5 +112,11 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
   }
 }

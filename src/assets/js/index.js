@@ -1,8 +1,11 @@
-// Import JS scripts
-import './uikit.js';   // Imports UIkit framework JavaScript
-import './main.js';    // Imports your main JavaScript file
+// Import JS
+import $ from 'jquery';
+import './uikit.js';
+import './main.js';
+import './matrix.js';
+import './analytics.js';
 
 // Import CSS
-import '../css/reset.css'; // Imports the demo CSS file
-import '../css/uikit.css'; // Imports the demo CSS file
-import '../css/main.scss'; // Imports the demo CSS file
+import '../css/reset.css';
+import '../css/uikit.css';
+import '../css/main.scss';

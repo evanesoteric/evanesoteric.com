@@ -1,11 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = {
+module.exports = (env) => ({
   mode: 'production',
   entry: {
     bundle: path.resolve(__dirname, 'src/assets/js/index.js'),
@@ -16,59 +17,11 @@ module.exports = {
     clean: true,
     assetModuleFilename: '[name][ext]',
   },
-  devtool: 'source-map',
-  devServer: {
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-    },
-    port: 3000,
-    open: true,
-    hot: true,
-    compress: true,
-    historyApiFallback: true,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(scss|css)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/img/[name].[hash][ext][query]'
-        }
-      },
-      {
-        test: /\.html$/,
-        loader: 'html-loader',
-        options: {
-          sources: {
-            list: [
-              {
-                tag: 'img',
-                attribute: 'src',
-                type: 'src',
-              },
-            ],
-          },
-          minimize: true,
-        },
-      },
-    ],
-  },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+    }),
     new HtmlWebpackPlugin({
       title: 'evanesoteric',
       filename: 'index.html',
@@ -89,11 +42,75 @@ module.exports = {
       }),
     new BundleAnalyzerPlugin(),
   ],
-  optimization: {
-    minimize: true, // Enable minimization
-    minimizer: [
-      new CssMinimizerPlugin(),
-      '...', // Use the default JS minimizer alongside the custom CSS minimizer
+  devtool: 'source-map',
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+    client: {
+      logging: 'none', // Keeps the logging setting as is, to not log anything to the browser console
+      overlay: {
+        errors: true,
+        warnings: true, // Set this to true to enable the overlay for warnings
+      },
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(scss|css)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/img/[name].[hash][ext][query]'
+        }
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name].[hash][ext][query]'
+        }
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+        options: {
+          sources: {
+            list: [
+              {
+                tag: 'img',
+                attribute: 'src',
+                type: 'src',
+              },
+            ],
+          },
+          minimize: true,
+        },
+      },
     ],
   },
-};
+  optimization: {
+    minimize: true,
+    minimizer: [new CssMinimizerPlugin(), '...'],
+  },
+  stats: env.ERROR_LOGGING === 'none' ? 'errors-only' : 'normal',
+});

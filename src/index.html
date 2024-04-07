@@ -22,11 +22,6 @@
 
     <!-- dynamic localization -->
     <meta property="og:locale" content="en_US">
-
-	<!-- css (uncomment for development until coditional dev/prod login setup) -->
-    <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/uikit.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/main.scss"> -->
 </head>
 <body>
 
@@ -36,8 +31,16 @@
 	</div>
 
 	<!-- mainline -->
-	<div class="mainline evanesoteric">
-      <h1 data-value="evanesoteric">evanesoteric</h1>
+	<div class="mainline">
+		<h1>
+	      <span is="type-async" id="type-text"></span>
+	  	  <span class="blinking-cursor">_</span>
+  	    </h1>
+	</div>
+
+	<!-- avatar -->
+	<div class="avatar">
+		<img src="assets/img/avatar.webp" alt="Avatar">
 	</div>
 
 	<!-- infobar -->
@@ -71,20 +74,6 @@
    	    </a>
    	    
 	</ul>
-
-	<!-- scripts -->
-	<script src="assets/js/uikit.js"></script>
-	<script src="assets/js/main.js"></script>
-
-	<!-- Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141000792-4"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-141000792-4');
-	</script>
 
 </body>
 </html>
