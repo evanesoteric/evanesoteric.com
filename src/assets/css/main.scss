@@ -38,7 +38,6 @@
   animation: delay 4s, fadeIn 9s ease-in-out;
   animation-fill-mode: forwards;
 }
-
 .mainline > h1 {
   font-family: 'EOB', 'Open Sans', sans-serif;
   font-size: 2em;
@@ -118,5 +117,26 @@
 @keyframes blink {
   to {
     visibility: hidden;
+  }
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 600px) {
+  .mainline {
+    font-size: 1.5em; /* Adjust font size for mobile */
+  }
+  .mainline > h1 {
+    font-size: 1.5em; /* Adjust font size for mobile */
+    white-space: normal; /* Allow text wrapping on mobile */
+    text-align: center; /* Center-align text on mobile */
+  }
+
+  .avatar img {
+    display: block;
+    margin: auto 5px;
+    padding: 10px;
+    height: 150px;
+    max-width: 150px;
+    border-radius: 50%;
   }
 }
