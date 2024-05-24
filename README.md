@@ -42,6 +42,11 @@ npm run serve
 
 This command starts a local development server. It usually opens automatically in your default browser at `http://localhost:3000` (or another port if 3000 is in use). The development server will reload if you make edits to the source files. You will also see any lint errors in the console.
 
+To start the develoment server without warning/error overlay:
+```
+npm run start:no-errors
+```
+
 ### Building for Production
 
 To compile and build the project for production, use:
