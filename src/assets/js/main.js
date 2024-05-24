@@ -6,9 +6,11 @@ async function init () {
   node.innerText = ""
   
   while (true) {
+    await sleep(60)
     await node.type('EVANESOTERIC')
-    await sleep(4230)
+    await sleep(6500)
     await node.delete('EVANESOTERIC')
+    await sleep(600)
     await node.type('HACK THE PLANET')
     await sleep(2800)
     await node.delete('HACK THE PLANET')
