@@ -1,0 +1,472 @@
+/*
+ * Template Name: Evan Esoteric
+ * Version: 1.0.0
+ * Author: Evan Esoteric
+ * Website: evanesoteric.com
+*/
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: #004e98; /* Windows XP blue desktop color */
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 11px;
+    user-select: none;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+.icon img {
+    width: 48px; /* XP icons are larger */
+    height: 48px;
+    margin-bottom: 5px;
+}
+
+.icon .label {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.icon:focus .label {
+    background-color: rgb(0 80 239 / 70%);
+    border: 1px dotted #fff;
+}
+
+/* Window Styles */
+.window {
+    position: absolute;
+    min-width: 250px;
+    min-height: 150px;
+    background: #ece9d8; /* XP silver/grey */
+    border: 1px solid #005cfe;
+    border-radius: 6px;
+    box-shadow: 3px 3px 8px rgb(0 0 0 / 40%);
+    display: flex;
+    flex-direction: column;
+    resize: both;
+    overflow: hidden;
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% - 30px) !important;
+    resize: none;
+    border-radius: 0;
+}
+
+.window.minimized {
+    display: none;
+}
+
+.title-bar {
+    background: linear-gradient(
+        to right,
+        #005cfe,
+        #0078d7
+    ); /* Royale theme blue */
+
+    color: white;
+    padding: 4px 5px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    flex-shrink: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #005cfe;
+}
+
+.title-bar-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-bar-buttons {
+    display: flex;
+}
+
+.title-bar-button {
+    width: 21px;
+    height: 21px;
+    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: black;
+    background-color: #ece9d8;
+    border: 1px solid #333;
+    border-radius: 3px;
+}
+
+.title-bar-button:active {
+    filter: brightness(0.9);
+}
+
+.window-body {
+    flex-grow: 1;
+    padding: 10px;
+    background: #ece9d8;
+    overflow: auto;
+    position: relative;
+}
+
+.window-body.matrix-body {
+    background: black;
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden; /* Prevent scrollbars on the matrix window */
+}
+
+.window-body canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.matrix-splash-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: lime;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    white-space: pre;
+    text-align: left;
+    pointer-events: none;
+
+    /* Removed fixed width to allow scaling */
+}
+
+.message-box-body {
+    background: #ece9d8 !important;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.message-box-body button {
+    width: 80px;
+    padding: 3px;
+    border: 1px solid #333;
+    background: #f0f0f0;
+}
+
+.recycle-bin-list {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    height: 100%;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #7f9db9;
+    box-sizing: border-box; /* This is the fix */
+}
+
+.recycle-bin-list li {
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.recycle-bin-list li.selected {
+    background-color: #316ac5;
+    color: white;
+}
+
+/* Styles for the Resume text document */
+.resume-content {
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    background: white;
+    padding: 15px;
+    border: 1px solid #7f9db9;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto; /* Allows text selection */ /* For Safari */ /* For Firefox */
+    user-select: text; /* For Internet Explorer/Edge */
+    cursor: text; /* Changes the mouse cursor to the text selection I-beam */
+}
+
+.resume-section {
+    margin-bottom: 0;
+}
+
+.resume-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+.resume-heading {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #c0c0c0;
+    padding-bottom: 2px;
+}
+
+.resume-sub-heading {
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.resume-text {
+    margin: 4px 0;
+}
+
+.resume-text p {
+    margin: 0;
+}
+
+/* XP System Properties Styles */
+.sys-prop-body {
+    background: #ece9d8 !important;
+    padding: 15px !important;
+    font-size: 12px;
+}
+
+.sys-prop-section {
+    border-bottom: 1px solid #c0c0c0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.sys-prop-section:last-child {
+    border-bottom: none;
+}
+
+.sys-prop-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sys-prop-content img {
+    width: 64px;
+    height: 64px;
+}
+
+/* Taskbar */
+.taskbar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(to bottom, #245edc, #3f8cf3, #245edc);
+    border-top: 1px solid #4a95f7;
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+}
+
+.start-button {
+    background: linear-gradient(to bottom, #39b13f, #55dd5b, #39b13f);
+    border: 1px solid #2a8c2f;
+    border-radius: 0 12px 12px 0 / 0 15px 15px 0;
+    padding: 2px 20px 6px 10px;
+    margin: 0;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    font-style: italic;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px #2a8c2f;
+}
+
+.start-button img {
+    width: 22px;
+    height: 22px;
+}
+
+.taskbar-windows {
+    flex-grow: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.taskbar-button {
+    height: 24px;
+    min-width: 100px;
+    max-width: 160px;
+    background: #3f8cf3;
+    border: 1px solid #005cfe;
+    border-radius: 3px;
+    margin: 0 2px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: white;
+}
+
+.taskbar-button.active {
+    background: #1b58b8;
+    border-color: #0e3b81;
+}
+
+.clock {
+    background: #3f8cf3;
+    border: 1px solid #005cfe;
+    padding: 4px 10px;
+    margin-right: 5px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* Start Menu */
+.start-menu {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 350px;
+    background: #f0f0f0;
+    border: 1px solid #005cfe;
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    z-index: 9998;
+    box-shadow: 3px 3px 8px rgb(0 0 0 / 40%);
+}
+
+.start-menu.active {
+    display: flex;
+}
+
+.start-menu-header {
+    background: linear-gradient(to bottom, #245edc, #3f8cf3);
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-size: 18px;
+}
+
+.start-menu-header img {
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+}
+
+.start-menu-body {
+    display: flex;
+    flex-grow: 1;
+}
+
+.start-menu-main,
+.start-menu-sidebar {
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    width: 50%;
+}
+
+.start-menu-sidebar {
+    background: #d4e1f7;
+}
+
+.start-menu-main li,
+.start-menu-sidebar li {
+    padding: 5px 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 3px;
+}
+
+.start-menu-main li:hover,
+.start-menu-sidebar li:hover {
+    background: #316ac5;
+    color: white;
+}
+
+/* Add these styles to the end of your main.scss file */
+
+.cmd-body {
+    background-color: #000;
+    color: #ccc;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 14px;
+    padding: 5px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmd-output {
+    flex-grow: 1;
+    white-space: pre-wrap; /* Allows text to wrap */
+    word-break: break-all;
+}
+
+.cmd-input-line {
+    display: flex;
+    align-items: center;
+}
+
+.cmd-input {
+    background-color: transparent;
+    border: none;
+    color: #ccc;
+    font-family: inherit;
+    font-size: inherit;
+    flex-grow: 1;
+    outline: none;
+}
