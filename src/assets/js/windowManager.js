@@ -519,7 +519,7 @@ export function createMyComputerWindow() {
             <div class="sys-prop-content">
                 <img src="${amdIcon}" alt="AMD CPU Icon" style="width: 48px; height: auto;">
                 <div>
-                    <p>CPU:AMD Athlon(tm) XP 1600+</p>
+                    <p>CPU: AMD Athlon(tm) XP 1600+</p>
                     <p>Memory (RAM): 512 MB</p>
                     <p>Display: ATI RADEON 7500 SERIES</p>
                     <p>Motherboard: Gigabyte GA-7VTXE+</p>
