@@ -109,20 +109,38 @@ function makeDraggable(elmnt) {
 
 function createWindowBase(id, title, options = {}) {
   const {
-    width = 500,
-    height = 400,
+    width: defaultWidth = 500,
+    height: defaultHeight = 400,
     resizable = true,
     isAppWindow = true,
   } = options;
+
+  const isMobile = window.innerWidth < 768;
+  let finalWidth, finalHeight, top, left;
+
+  if (isMobile) {
+    // On mobile, create smaller, centered windows
+    finalWidth = Math.min(defaultWidth, window.innerWidth * 0.9);
+    finalHeight = Math.min(defaultHeight, window.innerHeight * 0.7);
+    top = 30; // A small offset from the top
+    left = (window.innerWidth - finalWidth) / 2; // Center horizontally
+  } else {
+    // Original desktop logic for larger, staggered windows
+    finalWidth = defaultWidth;
+    finalHeight = defaultHeight;
+    top = 50 + (Object.keys(openWindows).length + messageBoxCount) * 20;
+    left = 100 + (Object.keys(openWindows).length + messageBoxCount) * 20;
+  }
+
   const windowEl = document.createElement("div");
   windowEl.className = "window";
   windowEl.id = `window-${id}`;
   windowEl.style.zIndex = ++highestZIndex;
-  windowEl.style.width = `${width}px`;
-  windowEl.style.height = `${height}px`;
+  windowEl.style.width = `${finalWidth}px`;
+  windowEl.style.height = `${finalHeight}px`;
   if (!resizable) windowEl.style.resize = "none";
-  windowEl.style.top = `${50 + (Object.keys(openWindows).length + messageBoxCount) * 20}px`;
-  windowEl.style.left = `${100 + (Object.keys(openWindows).length + messageBoxCount) * 20}px`;
+  windowEl.style.top = `${top}px`;
+  windowEl.style.left = `${left}px`;
 
   const titleBar = document.createElement("div");
   titleBar.className = "title-bar";
