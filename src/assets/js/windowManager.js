@@ -144,6 +144,11 @@ function createWindowBase(id, title, options = {}) {
 
   const titleBar = document.createElement("div");
   titleBar.className = "title-bar";
+
+  // --- NEW LINE ADDED HERE ---
+  titleBar.addEventListener("dblclick", () => maximizeWindow(id));
+  // -------------------------
+
   const titleText = document.createElement("span");
   titleText.className = "title-bar-text";
   titleText.textContent = title;
