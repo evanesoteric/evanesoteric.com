@@ -306,6 +306,227 @@ export function createUplinkWindow() {
   focusWindow(id);
 }
 
+// ========================================================================
+// === NEW COMMAND PROMPT - START ===
+// Replace your old createCmdWindow and handleCommand functions with this block.
+// ========================================================================
+
+// --- 1. Simulated Filesystem and Commands ---
+const fileSystem = {
+  "C:": {
+    type: "drive",
+    children: {
+      "Documents and Settings": {
+        type: "folder",
+        children: {
+          Evan: {
+            type: "folder",
+            children: {
+              Desktop: { type: "folder", children: {} },
+              "My Documents": {
+                type: "folder",
+                children: {
+                  "flag.txt": {
+                    type: "file",
+                    content: "254e5f2c3beb1a3d03f17253c15c07f3",
+                  },
+                  "todo.txt": {
+                    type: "file",
+                    content:
+                      "1. Deploy airgapped AI home lab\n2. Build a time machine\n3. <<encrypted>>",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      Windows: {
+        type: "folder",
+        children: {
+          System32: {
+            type: "folder",
+            children: {
+              config: {
+                type: "folder",
+                children: {
+                  SAM: {
+                    type: "file",
+                    content:
+                      "  Administrator:1001:AAD3B435B51404EEAAD3B435B51404EE:31D6CFE0D16AE931B73C59D7E0C089C0:::\n" +
+                      "  Ev:1002:AAD3B435B51404EEAAD3B435B51404EE:505A9279CFD2F94C658980551CFDE735:::\n" +
+                      "  Guest:501:NO PASSWORD*********************:NO PASSWORD*********************:::\n" +
+                      "  n3tw0rm:1337:E52CAC67419A9A224A3B108F3FA6CB6D:BA83809AC8DDB0A5E54E7F70658D134D:::",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+const commands = {
+  help: (state, args, print) => {
+    print(
+      "Available commands:\n" +
+        "  HELP   - Shows this help message.\n" +
+        "  CLS    - Clears the screen.\n" +
+        "  DIR    - Displays a list of files and subdirectories.\n" +
+        "  CD     - Displays the name of or changes the current directory.\n" +
+        "  TREE   - Graphically displays the directory structure.\n" +
+        "  TYPE   - Displays the contents of a text file.\n" +
+        "  CAT    - Displays the contents of a text file (alias for TYPE).\n" +
+        "  ECHO   - Displays messages.\n" +
+        "  DATE   - Displays the current date.\n" +
+        "  TIME   - Displays the current time.\n" +
+        "  VER    - Displays the Windows version.\n" +
+        "  EXIT   - Quits the CMD.EXE program.",
+    );
+  },
+  cls: (state, args, print, elements) => {
+    elements.output.innerHTML = "";
+  },
+  exit: (state, args, print, elements, windowId) => {
+    closeWindow(windowId);
+  },
+  echo: (state, args, print) => {
+    print(args.join(" "));
+  },
+  date: (state, args, print) => {
+    print(`The current date is: ${new Date().toLocaleDateString()}`);
+  },
+  time: (state, args, print) => {
+    print(`The current time is: ${new Date().toLocaleTimeString()}`);
+  },
+  ver: (state, args, print) => {
+    print("\nMicrosoft Windows XP [Version 5.1.2600]");
+  },
+  dir: (state, args, print) => {
+    const path =
+      state.currentPath.length > 0 ? state.currentPath.join("\\") : "";
+    const node = getNodeFromPath(state.currentPath);
+    if (!node || node.type === "file") {
+      print("File Not Found");
+      return;
+    }
+    let output = ` Volume in drive C has no label.\n`;
+    output += ` Directory of C:\\${path}\n\n`;
+    const children = node.children || {};
+    let dirCount = 0;
+    let fileCount = 0;
+
+    if (state.currentPath.length > 0) {
+      output += `${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}    <DIR>          .\n`;
+      output += `${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}    <DIR>          ..\n`;
+    }
+
+    for (const name in children) {
+      const child = children[name];
+      if (child.type === "folder") {
+        output += `${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}    <DIR>          ${name}\n`;
+        dirCount++;
+      } else {
+        const size = child.content.length;
+        output += `${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}    ${String(size).padStart(14, " ")} ${name}\n`;
+        fileCount++;
+      }
+    }
+    output += `               ${fileCount} File(s)              0 bytes\n`;
+    output += `               ${dirCount} Dir(s)  12,345,678,910 bytes free`;
+    print(output);
+  },
+  // FIXED: Now handles paths with spaces
+  cd: (state, args, print, elements) => {
+    const targetPath = args.join(" ").replace(/"/g, ""); // Re-join args for paths with spaces
+    if (!targetPath) {
+      print(`C:\\${state.currentPath.join("\\")}`);
+      return;
+    }
+
+    if (targetPath === "..") {
+      if (state.currentPath.length > 0) state.currentPath.pop();
+    } else if (targetPath === "\\") {
+      state.currentPath = [];
+    } else {
+      const currentNode = getNodeFromPath(state.currentPath);
+      const children = currentNode.children || {};
+      const realName = Object.keys(children).find(
+        (name) => name.toLowerCase() === targetPath.toLowerCase(),
+      );
+
+      if (realName && children[realName].type === "folder") {
+        state.currentPath.push(realName);
+      } else {
+        print("The system cannot find the path specified.");
+        return;
+      }
+    }
+    elements.prompt.textContent = `C:\\${state.currentPath.join("\\")}>`;
+  },
+  type: (state, args, print) => {
+    const fileName = args.join(" "); // Allow filenames with spaces
+    if (!fileName) {
+      print("The syntax of the command is incorrect.");
+      return;
+    }
+    const node = getNodeFromPath(state.currentPath);
+    const children = node.children || {};
+    const realName = Object.keys(children).find(
+      (name) => name.toLowerCase() === fileName.toLowerCase(),
+    );
+    const file = realName ? children[realName] : null;
+
+    if (file && file.type === "file") {
+      print(file.content);
+    } else {
+      print("The system cannot find the file specified.");
+    }
+  },
+  cat: (...args) => commands.type(...args),
+  tree: (state, args, print) => {
+    let structure = `C:.${state.currentPath.length > 0 ? "\\" + state.currentPath.join("\\") : ""}\n`;
+    const startNode = getNodeFromPath(state.currentPath);
+
+    function buildTree(node, prefix = "") {
+      if (!node.children) return "";
+      let result = "";
+      const childrenNames = Object.keys(node.children);
+      childrenNames.forEach((name, index) => {
+        const isLast = index === childrenNames.length - 1;
+        result += `${prefix}${isLast ? "└───" : "├───"}${name}\n`;
+        const childNode = node.children[name];
+        if (childNode.type === "folder") {
+          result += buildTree(
+            childNode,
+            `${prefix}${isLast ? "    " : "│   "}`,
+          );
+        }
+      });
+      return result;
+    }
+
+    structure += buildTree(startNode);
+    print(structure);
+  },
+};
+
+// --- 2. Helper function to navigate the simulated filesystem ---
+function getNodeFromPath(pathArray) {
+  let currentNode = fileSystem["C:"];
+  for (const part of pathArray) {
+    if (currentNode.children && currentNode.children[part]) {
+      currentNode = currentNode.children[part];
+    } else {
+      return null;
+    }
+  }
+  return currentNode;
+}
+
+// --- 3. The new, feature-rich createCmdWindow function ---
 export function createCmdWindow() {
   const id = "cmd-prompt";
   if (openWindows[id]) {
@@ -313,9 +534,15 @@ export function createCmdWindow() {
     return;
   }
 
+  const state = {
+    commandHistory: [],
+    historyIndex: 0,
+    currentPath: ["Documents and Settings", "Evan"],
+  };
+
   const windowEl = createWindowBase(id, "Command Prompt", {
-    width: 640,
-    height: 400,
+    width: 680,
+    height: 420,
     isAppWindow: true,
   });
   const windowBody = windowEl.querySelector(".window-body");
@@ -330,7 +557,8 @@ export function createCmdWindow() {
   inputLine.className = "cmd-input-line";
 
   const prompt = document.createElement("span");
-  prompt.textContent = "C:\\Documents and Settings\\Evan>";
+  prompt.className = "cmd-prompt-path";
+  prompt.textContent = `C:\\${state.currentPath.join("\\")}>`;
 
   const input = document.createElement("input");
   input.type = "text";
@@ -340,97 +568,82 @@ export function createCmdWindow() {
   inputLine.append(prompt, input);
   windowBody.append(output, inputLine);
 
-  windowBody.addEventListener("click", () => input.focus());
-  setTimeout(() => input.focus(), 0);
+  const print = (text) => {
+    const line = document.createElement("div");
+    line.className = "cmd-output-line";
+    line.textContent = text;
+    output.appendChild(line);
+  };
+
+  const executeCommand = (commandStr) => {
+    const echoLine = document.createElement("div");
+    echoLine.textContent = `${prompt.textContent}${commandStr}`;
+    output.appendChild(echoLine);
+
+    if (commandStr) {
+      state.commandHistory.push(commandStr);
+      state.historyIndex = state.commandHistory.length;
+
+      const trimmedCommand = commandStr.trim();
+      const firstSpaceIndex = trimmedCommand.indexOf(" ");
+      const command = (
+        firstSpaceIndex === -1
+          ? trimmedCommand
+          : trimmedCommand.substring(0, firstSpaceIndex)
+      ).toLowerCase();
+      const args =
+        firstSpaceIndex === -1
+          ? []
+          : trimmedCommand.substring(firstSpaceIndex + 1).split(/\s+/);
+
+      if (commands[command]) {
+        commands[command](state, args, print, { output, prompt }, id);
+      } else {
+        print(
+          `'${command}' is not recognized as an internal or external command,\noperable program or batch file.`,
+        );
+      }
+    }
+
+    output.appendChild(document.createElement("br"));
+    input.value = "";
+    windowBody.scrollTop = windowBody.scrollHeight;
+  };
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      const command = input.value.trim().toLowerCase();
-      const args = command.split(" ").slice(1);
-
-      const echoLine = document.createElement("div");
-      echoLine.textContent = `C:\\Documents and Settings\\Evan>${command}`;
-      output.appendChild(echoLine);
-
-      handleCommand(command, args, output, id);
-
-      input.value = "";
-      output.scrollTop = output.scrollHeight;
+      executeCommand(input.value);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (state.historyIndex > 0) {
+        state.historyIndex--;
+        input.value = state.commandHistory[state.historyIndex];
+        input.selectionStart = input.selectionEnd = input.value.length;
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (state.historyIndex < state.commandHistory.length - 1) {
+        state.historyIndex++;
+        input.value = state.commandHistory[state.historyIndex];
+        input.selectionStart = input.selectionEnd = input.value.length;
+      } else {
+        state.historyIndex = state.commandHistory.length;
+        input.value = "";
+      }
     }
   });
+
+  windowBody.addEventListener("click", () => input.focus());
+  setTimeout(() => input.focus(), 0);
 
   openWindows[id] = { el: windowEl, title: "Command Prompt", type: "cmd" };
   createTaskbarButton(id, "Command Prompt");
   focusWindow(id);
 }
-
-/**
- * Handles the logic for processing commands entered into the dummy CMD prompt.
- * @param {string} command - The command entered by the user.
- * @param {string[]} args - An array of arguments that followed the command.
- * @param {HTMLElement} output - The output element to append responses to.
- * @param {string} windowId - The ID of the command prompt window.
- */
-function handleCommand(command, args, output, windowId) {
-  const response = document.createElement("div");
-
-  // Use a switch statement to determine which command was entered.
-  switch (command.split(" ")[0]) {
-    case "help":
-      // For 'help', set the innerHTML to a formatted string of commands.
-      response.innerHTML = `
-                Available commands:<br>
-                HELP   - Shows this help message.<br>
-                CLS    - Clears the screen.<br>
-                DIR    - Displays a list of files and subdirectories.<br>
-                ECHO   - Displays messages.<br>
-                EXIT   - Quits the CMD.EXE program.<br>
-            `;
-      break;
-    case "cls":
-      // For 'cls', clear all previous output.
-      output.innerHTML = "";
-      return; // Exit the function early as no response text is needed.
-    case "exit":
-      // For 'exit', call the main closeWindow function.
-      closeWindow(windowId);
-      return; // Exit early.
-    case "dir":
-      // For 'dir', provide a simulated directory listing.
-      response.innerHTML = `
-             Volume in drive C has no label.<br>
-             Volume Serial Number is B4B1-A421<br>
-             <br>
-             Directory of C:\\Documents and Settings\\Evan<br>
-             <br>
-             08/17/2024  04:32 PM    &lt;DIR&gt;          .<br>
-             08/17/2024  04:32 PM    &lt;DIR&gt;          ..<br>
-             08/17/2024  02:15 PM    &lt;DIR&gt;          Desktop<br>
-             08/17/2024  01:05 PM    &lt;DIR&gt;          My Documents<br>
-             08/17/2024  11:50 AM    &lt;DIR&gt;          Favorites<br>
-                           0 File(s)              0 bytes<br>
-                           5 Dir(s)  12,345,678,910 bytes free<br>
-            `;
-      break;
-    case "echo":
-      // For 'echo', join the arguments back together and display them.
-      response.textContent = args.join(" ");
-      break;
-    default:
-      // If the command is not recognized, show a default error message.
-      if (command) {
-        response.textContent = `'${command}' is not recognized as an internal or external command, operable program or batch file.`;
-      }
-      break;
-  }
-  // Append the generated response to the output.
-  if (response.innerHTML || response.textContent) {
-    output.appendChild(response);
-  }
-  // Add a blank line for spacing after the response.
-  output.appendChild(document.createElement("br"));
-}
-
+// ========================================================================
+// === NEW COMMAND PROMPT - END ===
+// ========================================================================
+//
 export function createRecycleBinWindow() {
   const id = "recycle-bin";
   if (openWindows[id]) {

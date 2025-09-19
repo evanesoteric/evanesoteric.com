@@ -68,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
       case "createResumeWindow":
         windowManager.createResumeWindow();
         break;
-      // *** THIS BLOCK IS NOW FIXED ***
       case "createWhoamiWindow": {
         const artTexts = [whoami_1, whoami_2];
         windowManager.createWindow(
