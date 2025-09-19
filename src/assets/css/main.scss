@@ -124,24 +124,46 @@ html {
     width: 21px;
     height: 21px;
     margin-left: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    background-size: contain;
+    background-size: 10px 10px;
     background-repeat: no-repeat;
     background-position: center;
-    font-family: Tahoma, Geneva, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    color: black;
-    background-color: #ece9d8;
-    border: 1px solid #333;
+    background-color: #f0f0f0;
+    border: 1px solid #000;
     border-radius: 3px;
+    box-shadow: inset 0 0 1px 1px #fff;
 }
 
 .title-bar-button:active {
     filter: brightness(0.9);
+}
+
+.minimize-btn {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 5h8v2H0z' fill='%230A246A'/%3E%3C/svg%3E");
+}
+.minimize-btn:hover {
+    background-color: #c2d2f2;
+}
+
+.maximize-btn {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M0 0h10v1H0zm0 1h1v8H0zm9 0h1v8h-1zm-8 8h9v1H1z' fill='%230A246A'/%3E%3C/svg%3E");
+}
+.maximize-btn:hover {
+    background-color: #c2d2f2;
+}
+
+/* Style for the 'restore' icon when window is maximized */
+.window.maximized .maximize-btn {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 0h6v1H2zm0 1h1v1H2zm5 0h1v1H7zm-5 4h1v3H2zm5 0h1v3H7zm-4-3h4v1H3zm0 1h1v1H3zm3 0h1v1H6z M2 7h5v1H2z' fill='%230A246A'/%3E%3C/svg%3E");
+}
+
+.close-btn {
+    background-color: #e81123;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 0l4 4 4-4 1 1-4 4 4 4-1 1-4-4-4 4-1-1 4-4-4-4z' fill='%23fff'/%3E%3C/svg%3E");
+    border-color: #790811;
+}
+.close-btn:hover {
+    background-color: #f1707a;
 }
 
 .window-body {

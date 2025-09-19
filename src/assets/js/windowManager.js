@@ -144,10 +144,7 @@ function createWindowBase(id, title, options = {}) {
 
   const titleBar = document.createElement("div");
   titleBar.className = "title-bar";
-
-  // --- NEW LINE ADDED HERE ---
   titleBar.addEventListener("dblclick", () => maximizeWindow(id));
-  // -------------------------
 
   const titleText = document.createElement("span");
   titleText.className = "title-bar-text";
@@ -157,21 +154,18 @@ function createWindowBase(id, title, options = {}) {
 
   if (isAppWindow) {
     const minimizeBtn = document.createElement("div");
-    minimizeBtn.className = "title-bar-button";
-    minimizeBtn.innerHTML = "&#95;";
+    minimizeBtn.className = "title-bar-button minimize-btn"; // Changed
     minimizeBtn.onclick = () => minimizeWindow(id);
     buttons.appendChild(minimizeBtn);
 
     const maximizeBtn = document.createElement("div");
-    maximizeBtn.className = "title-bar-button";
-    maximizeBtn.innerHTML = "&#9633;";
+    maximizeBtn.className = "title-bar-button maximize-btn"; // Changed
     maximizeBtn.onclick = () => maximizeWindow(id);
     buttons.appendChild(maximizeBtn);
   }
 
   const closeBtn = document.createElement("div");
-  closeBtn.className = "title-bar-button";
-  closeBtn.innerHTML = "X";
+  closeBtn.className = "title-bar-button close-btn"; // Changed
   closeBtn.onclick = () => {
     if (isAppWindow) closeWindow(id);
     else windowEl.remove();
