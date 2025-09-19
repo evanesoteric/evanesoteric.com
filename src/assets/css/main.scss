@@ -23,8 +23,14 @@ html {
     top: 20px;
     left: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* This makes the icons stack vertically first. */
+    flex-wrap: wrap; /* This allows the icons to wrap into a new column. */
+    align-content: flex-start; /* This ensures new columns start from the top. */
     gap: 20px;
+
+    /* Set a max-height to tell the container when to wrap.
+       100vh is the full screen height, minus 50px for the taskbar and margins. */
+    max-height: calc(100vh - 50px);
 }
 
 .icon {
