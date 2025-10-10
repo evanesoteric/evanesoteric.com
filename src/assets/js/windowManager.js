@@ -1,6 +1,5 @@
 import { initMatrixEffect } from "./matrix.js";
 // Import all image assets used in this module at the top
-import uplinkBg from "../img/uplink-bg.png";
 import windowsXpIcon from "../img/icons/windows-xp.svg";
 import user1Icon from "../img/icons/user1.svg";
 import amdIcon from "../img/icons/amd-athlon-xp.svg";
@@ -235,68 +234,6 @@ export function createRuneScapeWindow() {
   windowBody.appendChild(iframe);
   openWindows[id] = { el: windowEl, title: "RuneScape.jar", type: "video" };
   createTaskbarButton(id, "RuneScape.jar");
-  focusWindow(id);
-}
-
-export function createGunZWindow() {
-  const id = "gunz-video";
-  if (openWindows[id]) {
-    focusWindow(id);
-    return;
-  }
-  const windowEl = createWindowBase(id, "GunZ", {
-    width: 640,
-    height: 480,
-    isAppWindow: true,
-    resizable: true,
-  });
-  const windowBody = windowEl.querySelector(".window-body");
-  windowBody.style.padding = "0";
-  windowBody.style.overflow = "hidden";
-  const videoId = "NiA3MqUzS-8";
-  const startTime = 0;
-  const iframe = document.createElement("iframe");
-  iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  iframe.style.border = "none";
-  iframe.src = `https://www.youtube.com/embed/${videoId}?start=${startTime}&autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}`;
-  iframe.allow =
-    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-  iframe.allowFullscreen = true;
-  windowBody.appendChild(iframe);
-  openWindows[id] = { el: windowEl, title: "GunZ.exe", type: "video" };
-  createTaskbarButton(id, "GunZ.exe");
-  focusWindow(id);
-}
-
-export function createUplinkWindow() {
-  const id = "uplink-window";
-  if (openWindows[id]) {
-    focusWindow(id);
-    return;
-  }
-  const windowEl = createWindowBase(id, "Uplink", {
-    width: 640,
-    height: 480,
-    isAppWindow: true,
-    resizable: true,
-  });
-  const windowBody = windowEl.querySelector(".window-body");
-  windowBody.style.padding = "0";
-  windowBody.style.overflow = "hidden";
-  windowBody.style.display = "flex";
-  windowBody.style.alignItems = "center";
-  windowBody.style.justifyContent = "center";
-  windowBody.style.background = "#000";
-  const img = document.createElement("img");
-  img.src = uplinkBg;
-  img.alt = "Uplink background";
-  img.style.width = "100%";
-  img.style.height = "100%";
-  img.style.objectFit = "contain";
-  windowBody.appendChild(img);
-  openWindows[id] = { el: windowEl, title: "Uplink.exe", type: "image" };
-  createTaskbarButton(id, "Uplink.exe");
   focusWindow(id);
 }
 

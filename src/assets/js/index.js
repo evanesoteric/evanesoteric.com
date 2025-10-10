@@ -82,12 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
       case "createRuneScapeMessage":
         windowManager.createRuneScapeWindow();
         break;
-      case "createGunZMessage":
-        windowManager.createGunZWindow();
-        break;
-      case "createUplinkMessage":
-        windowManager.createUplinkWindow();
-        break;
       case "createCmdWindow":
         windowManager.createCmdWindow();
         break;
