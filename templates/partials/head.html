@@ -1,0 +1,35 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ page.title | default(value=config.title) }}</title>
+<meta name="author" content="{{ config.extra.author }}" />
+<meta
+    name="description"
+    content="{{ page.description | default(value=config.description) | safe }}"
+/>
+<!-- opengraph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="{{ config.title }}" />
+<meta property="og:title" content="{{ page.title | default(value=config.title) }}" />
+<meta property="og:url" content="{{ config.base_url }}" />
+<meta
+    property="og:image"
+    content="{{ config.base_url }}/assets/img/opengraph.webp"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="evanesoteric.com" />
+<meta
+    name="twitter:image"
+    content="{{ config.base_url }}/assets/img/opengraph.webp"
+/>
+<meta
+    property="og:image"
+    content="{{ config.base_url }}/assets/img/favicon.webp"
+/>
+<!-- favicon -->
+<link rel="icon" href="/assets/img/favicon.webp" type="image/webp" />
+<!-- dynamic localization -->
+<meta property="og:locale" content="{{ config.extra.og_locale }}" />
+<!-- styles -->
+<link rel="stylesheet" href="/main.css" />
+<!-- scripts -->
+<script type="module" src="/assets/js/index.js" defer></script>
