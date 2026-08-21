@@ -1,0 +1,9 @@
+base_url = "https://evanesoteric.com"
+title = "Evan Esoteric"
+description = "Evan Esoteric's digital matrix; enter at your own risk."
+compile_sass = true
+build_search_index = false
+
+[extra]
+author = "Evan Esoteric"
+og_locale = "en_US"
